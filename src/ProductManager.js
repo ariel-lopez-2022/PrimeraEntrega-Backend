@@ -14,36 +14,17 @@ class ProductManager {
     this.Product = [];
     this.path = path;
   }
-CreateFile = async () => {
+  CreateFile = async () => {
     const File = fs.existsSync(this.path);
     if (File) {
-      console.log("Ya Existe Archivo");
       const { products } = await readFile(this.path);
       this.Product = products;
     } else {
       await writeFile(this.path, this.Product);
-      console.log("Archivo Creado con exito!");
     }
   };
 
-  addProduct = async (objeto)=> {
-
-    if (objeto.title || objeto.description || objeto.code || objeto.price || objeto.Status || objeto.stock || objeto.category ){
-         const {products} =  await readFile(this.path);
-         this.Product = products;
-         this.Product.push({
-        id : this.Product.length,
-        ...objeto
-      });
-      await writeFile(this.path, this.Product);
-      return ("Producto Agregado Correctamente");
-     } else {
-         return {status:400, error:"Falta Campos Obligatorios"};
-     }
-};
-
-
-  getProducts = async (limit)=> {
+  getProducts = async (limit) => {
     const { products } = await readFile(this.path);
     if (!limit) {
       return products;
@@ -53,43 +34,58 @@ CreateFile = async () => {
     }
   };
 
-  getProductById = async (id) => {
-    
-    const { products } = await readFile(this.path);
+  addProduct = async (objeto) => {
 
-    const ProductId = products.find((product) => product.id === parseInt(id));
-
-    if (ProductId) {
-      return ProductId;
+    if (objeto.title || objeto.description || objeto.code || objeto.price || objeto.Status || objeto.stock || objeto.category) {
+      const { products } = await readFile(this.path);
+      this.Product = products;
+      this.Product.push({
+        id: this.Product.length,
+        ...objeto
+      });
+      await writeFile(this.path, this.Product);
+      return {msg:"Producto Agregado Correctamente"};
     } else {
-      return {status:400, error:"El Producto no se encontro"};
+      return { msg:"Falta Campos Obligatorios" };
     }
   };
 
+
+  
+
+  getProductById = async (id) => {
+    const { products } = await readFile(this.path);
+    const ProductId = products.find((product) => product.id === parseInt(id));
+    if (ProductId) {
+      return ProductId;
+    } else {
+      return null ;
+    }
+  };
+
+
   UpdateProduct = async (id, body) => {
-    
+
     const { products } = await readFile(this.path);
     this.Product = products
-    const UpdateProduct = this.Product.findIndex((element)=> element.id === id);  
+    const UpdateProduct = this.Product.findIndex((element) => element.id === id);
     console.log(UpdateProduct)
-    
-    if (UpdateProduct !== -1 ){
-       const id = this.Product[UpdateProduct].id;
-       this.Product[UpdateProduct] = {
+
+    if (UpdateProduct !== -1) {
+      const id = this.Product[UpdateProduct].id;
+      this.Product[UpdateProduct] = {
         id,
         ...body
-       };
-       await writeFile(this.path, this.Product);
-       return ("El Producto se Actualizo Corectamente");
+      };
+      await writeFile(this.path, this.Product);
+      return ("El Producto se Actualizo Corectamente");
     } else {
-      return {status:400, error:"El Producto a Actualizar no se encontro"};
+      return { msg:"El Producto a Actualizar no se encontro" };
     }
 
   };
 
   deleteProduct = async (id) => {
-
-    console.log(typeof id)
     const { products } = await readFile(this.path);
     this.Product = products
     const FindIndex = this.Product.findIndex((element) => element.id === id);
@@ -97,9 +93,9 @@ CreateFile = async () => {
       const newArrayProducts = this.Product.filter(
         (product) => product.id !== id);
       await writeFile(this.path, newArrayProducts);
-      return ("El Producto se Elimino Corectamente");;
+      return {msg: "El Producto se Elimino Corectamente"};;
     } else {
-      return {status:400, error:"El Producto a Eliminar no se encontro"};
+      return { msg:"El Producto a Eliminar no se encontro" };
     }
   };
 }

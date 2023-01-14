@@ -3,10 +3,13 @@ const Product = new ProductManager('./assets/product.json');
 
 const getProducts = async (req, res) => {
   const {limit: limite = ""} = req.query;
-  
   if (!limite) {
     let productos = await Product.getProducts();
-    res.json(productos);
+    if (productos.length == 0){
+      res.json({msg:"No Hay Productos"});
+    }else{
+      res.json(productos);
+    }
   } else{
     let productos = await Product.getProducts(limite);
      res.json(productos);
@@ -32,7 +35,7 @@ const addProduct = async (req , res)=>{
     const body = req.body;
     const add = await Product.addProduct(body);
     if (add.erro){
-      res.json(add.status).send(add)
+      res.json(add)
     }else{
       res.json(add);
     }
@@ -43,8 +46,8 @@ const  UpdateProduct = async (req, res)=>{
     const id = +req.params.pid  
     const body = req.body
     const update = await Product.UpdateProduct(id, body);
-    if (update.erro){
-      res.json(update.status).send(update)
+    if (update){
+      res.json(update)
     }else{
       res.json(update);
     }
@@ -55,7 +58,7 @@ const deleteProduct = async (req, res)=>{
   const id = +req.params.pid 
   const Delete = await Product.deleteProduct (id);
   if (Delete.erro){
-    res.json(Delete.status).send(Delete);
+    res.json(Delete);
   }else{
     res.json(Delete);
   }

@@ -1,0 +1,36 @@
+{"products":[
+   {
+      "id":0,
+      "title":"Titulo Prueba 0",
+      "description":"Descripcion Prueba 0",
+      "code":"Cod0",
+      "price":"Precio Prueba 0",
+      "status":true,
+      "stock":"10",
+      "category":"category prueba 0",
+      "thumbnail":["Enlase prueba 0"]
+   },   
+   {
+      "id":1,
+      "title":"Titulo Prueba 1",
+      "description":"Descripcion Prueba 1",
+      "code":"Cod1",
+      "price":"Precio Prueba 1",
+      "status":true,
+      "stock":"10",
+      "category":"category prueba 1",
+      "thumbnail":["Enlase prueba 1"]
+   } , 
+   {
+      "id":2,
+      "title":"Titulo Prueba 2",
+      "description":"Descripcion Prueba 2",
+      "code":"Cod2",
+      "price":"Precio Prueba 2",
+      "status":true,
+      "stock":"10",
+      "category":"category prueba 2",
+      "thumbnail":["Enlase prueba 2"]
+   }   
+]}
+ 
