@@ -9,7 +9,6 @@ const createCarts = async (req, res) => {
 }
 
 const getCarts = async (req, res) => {
-
     const cart = await Carts.getCatrs(req.params.cid);
     if (cart.error) {
         res.json(cart)
